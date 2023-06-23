@@ -113,7 +113,7 @@ Código fora do padrão:
 ```"""
             comments.append(
                 __create_comment(
-                    comment_id=__generate_md5(text_original),
+                    comment_id=__generate_md5(comment),
                     comment=comment,
                     path=path_internal,
                     line=line
