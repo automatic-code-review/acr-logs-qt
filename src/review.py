@@ -115,16 +115,24 @@ Código fora do padrão:
                 __create_comment(
                     comment_id=__generate_md5(text_original),
                     comment=comment,
+                    path=path_internal,
+                    line=line
                 )
             )
 
     return comments
 
 
-def __create_comment(comment_id, comment):
+def __create_comment(comment_id, comment, path, line):
     return {
         "id": comment_id,
         "comment": comment,
+        "position": {
+            "language": 'c++',
+            "path": path,
+            "startInLine": line,
+            "endInLine": line
+        }
     }
 
 
