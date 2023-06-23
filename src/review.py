@@ -105,12 +105,9 @@ def __review_by_line(text, log_type, check, path_file, path_code_origin, text_or
 
         if not re.search(check, text):
             path_internal = str(path_file).replace(path_code_origin + "/", "")
-            comment = f"""Linha de código fora do padrão no arquivo: {path_internal}
-Na linha: {line}
-Código fora do padrão:
-```c++
-{text_original}
-```"""
+            comment = f"""Código de log fora do padrão<br>
+Arquivo: {path_internal}<br>
+Linha: {line}"""
             comments.append(
                 __create_comment(
                     comment_id=__generate_md5(comment),
