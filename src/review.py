@@ -91,13 +91,15 @@ def __review_by_file(path_code_origin, path_file, regex_log, log_types):
                     path_file=path_file,
                     path_code_origin=path_code_origin,
                     text_original=text_original,
+                    class_name=obj['class'],
+                    method_name=obj['method'],
                     line=i + 1,
                 ))
 
     return comments
 
 
-def __review_by_line(text, log_type, check, path_file, path_code_origin, text_original, line):
+def __review_by_line(text, log_type, check, path_file, path_code_origin, text_original, line, class_name, method_name):
     comments = []
 
     if log_type in text:
@@ -107,7 +109,9 @@ def __review_by_line(text, log_type, check, path_file, path_code_origin, text_or
             path_internal = str(path_file).replace(path_code_origin + "/", "")
             comment = f"""Código de log fora do padrão<br>
 Arquivo: {path_internal}<br>
-Linha: {line}"""
+Linha: {line}<br>
+Classe: {class_name}<br>
+Method: {method_name}"""
             comments.append(
                 __create_comment(
                     comment_id=__generate_md5(comment + "|" + text),
