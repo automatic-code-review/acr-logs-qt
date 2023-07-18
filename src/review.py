@@ -81,7 +81,6 @@ def __review_by_file(path_code_origin, path_file, regex_log, log_types):
 
         for i in range(start_line - 1, end_line):
             text = linhas[i]
-            text_original = str(text).strip()
 
             for log_type in log_types:
                 comments.extend(__review_by_line(
@@ -90,7 +89,6 @@ def __review_by_file(path_code_origin, path_file, regex_log, log_types):
                     check=check,
                     path_file=path_file,
                     path_code_origin=path_code_origin,
-                    text_original=text_original,
                     class_name=obj['class'],
                     method_name=obj['method'],
                     line=i + 1,
@@ -99,7 +97,7 @@ def __review_by_file(path_code_origin, path_file, regex_log, log_types):
     return comments
 
 
-def __review_by_line(text, log_type, check, path_file, path_code_origin, text_original, line, class_name, method_name):
+def __review_by_line(text, log_type, check, path_file, path_code_origin, line, class_name, method_name):
     comments = []
 
     if log_type in text:
