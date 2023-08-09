@@ -60,12 +60,7 @@ def __review_by_file(path_code_origin, path_file, regex_log, log_types):
         if 'scopeKind' not in function or function['scopeKind'] != 'class':
             continue
 
-        objs.append({
-            'class': function['scope'],
-            'method': function['name'],
-            'startInLine': function['line'],
-            'endInLine': function['end'],
-        })
+        objs.append(__get_function_obj(function))
 
     objs = sorted(objs, key=lambda x: x['startInLine'])
 
@@ -139,3 +134,32 @@ def __generate_md5(string):
     md5_hash = hashlib.md5()
     md5_hash.update(string.encode('utf-8'))
     return md5_hash.hexdigest()
+
+
+def __get_property_or_none(obj, name):
+    if name in obj:
+        return obj[name]
+
+    return None
+
+
+def __get_function_obj(function):
+    class_name = __get_property_or_none(function, 'scope')
+    method_name = __get_property_or_none(function, 'name')
+
+    obj = {
+        'class': class_name,
+        'method': method_name,
+        'startInLine': __get_property_or_none(function, 'line'),
+        'endInLine': __get_property_or_none(function, 'end'),
+    }
+
+    for attribute in ['class', 'method', 'startInLine', 'endInLine']:
+        if obj[attribute] is None:
+            print(
+                f'automatic-code-review::review - acr-logs-qt Property {attribute} is none. '
+                f'Verify function {method_name} in class {class_name}')
+            error_msg = f"A property {attribute} cannot be none"
+            raise ValueError(error_msg)
+
+    return obj
