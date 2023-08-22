@@ -147,6 +147,9 @@ def __get_function_obj(function):
     class_name = __get_property_or_none(function, 'scope')
     method_name = __get_property_or_none(function, 'name')
 
+    class_name = class_name.split('::')
+    class_name = class_name[len(class_name) - 1]
+
     obj = {
         'class': class_name,
         'method': method_name,
