@@ -25,6 +25,9 @@ def review(config):
 def __review_by_dir(path_code, path_code_origin, regex_file, regex_log, log_types):
     comments = []
 
+    if not os.path.exists(path_code):
+        return []
+
     for content in os.listdir(path_code):
         path_content = os.path.join(path_code, content)
 
